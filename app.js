@@ -1,58 +1,58 @@
-
-let titulo = document.getElementById('h1')
+// 1) Crie um array para armazenar os nomes
+let titulo = document.querySelector('h1')
 titulo.innerHTML = 'Bem-vindo ao amigo oculto online!'
 
 let amigos = [];
-    
-//Capturar o valor do campo de entrada
-//Se estiver vazio, exiba um alerta com a mensagem de erro:
+let lista = document.getElementById('listaAmigos');
+
+// Função para adicionar amigos
 function adicionarAmigo() {
-    let inputAmigo = document.getElementById('#amigo').value;
-    if (inputAmigo === '') {
-        alert('Por favor, insira um nome.');
+    let nome = document.querySelector('input').value.trim();
+
+    if (nome === '') {
+        alert("Por favor, insira um nome!");
+        return;
     } else {
-        // Capturar o valor do campo de entrada
-        amigos.push(inputAmigo);
-
-        // atualiza lista
-        atualizarLista();
-
-        // limpa o campo de entrada
+        amigos.push(nome);
         limparCampo();
     }
+    atualizarLista();
+    console.log('Nome capturado: ', nome);
+    return nome;
+    
 }
-//Validar a entrada
-function limparCampo() {
-    let inputAmigo = document.getElementById('amigos');
-    let nomeAmigo = inputAmigo.value.trim();
-}
-//Atualizar o array de amigos:
-function atualizarLista() {
-    let lista = document.getElementById('listaAmigos');
-    lista.innerHTML = ''; // limpa o campo de entrada
 
-    // adiciona os nomes na lista
-    amigos.forEach((nome) => {
+// Função para limpar o campo
+function limparCampo() {
+    nome = document.querySelector('input');
+    nome.value = '';
+}
+
+// Função para atualizar a lista
+function atualizarLista() {
+    lista.innerHTML = ''; // Limpar a lista existente
+
+    amigos.forEach(amigo => {
         let item = document.createElement('li');
-        item.textContent = nome;
+        item.textContent = amigo;
         lista.appendChild(item);
     });
 }
 
+// Função para sortear quatro amigo secreto
 function sortearAmigo() {
-    if (amigos.length === 0) {
-        alert('Nenhum nome foi adicionado à lista.');
+    if (amigos.length <4) {
+        alert('Adicione pelo menos quatro nomes para realizar o sorteio!');
         return;
     }
 
-    // sorteia um dos nomes da lista
-    let sorteador = Math.floor(Math.random() * amigos.length);
-
-    // pega um nome da lista
-    let amigoSorteado = amigos[sorteador];
-
-    // Mostra o resultado do sorteio "amigoOculto"
-    let amigoOculto = document.getElementById('#amigoOculto');
-    amigoOculto.innerHTML = `<li>O Amigo sorteado foi: <strong>${amigoSorteado}</strong></li>`;
+    let amigoSorteado = amigos[Math.floor(Math.random() * amigos.length)];
+    resultado.innerHTML = `<li>O(A) amigo(a) oculto(a) é: ${amigoSorteado}</li>`;
 }
 
+// Função para limpar a lista e recomeçar o sorteio
+function limparLista() {
+    amigos = [];
+    atualizarLista();
+    resultado.innerHTML = '';
+}
